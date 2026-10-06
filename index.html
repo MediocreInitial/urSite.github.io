@@ -8,21 +8,19 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --bg-color: #0b0d19;
-      --card-bg: rgba(22, 27, 46, 0.45);
-      --card-border: rgba(255, 255, 255, 0.15);
-      --glass-highlight: rgba(255, 255, 255, 0.25);
+      --bg-color: #080a14;
       --purple-accent: #a855f7;
       --cyan-accent: #06b6d4;
-      --text-main: #f3f4f6;
-      --text-sub: #9ca3af;
+      --blue-accent: #3b82f6;
+      --text-main: #ffffff;
+      --text-sub: #94a3b8;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
 
@@ -35,14 +33,14 @@
       color: var(--text-main);
       display: flex;
       justify-content: center;
-      padding: 20px 15px 40px 15px;
+      padding: 20px 15px 50px 15px;
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
     }
 
-    /* Анимированный живой фон */
+    /* --- АКТИВНЫЙ ДИНАМИЧЕСКИЙ ФОН (Яндекс Музыка Style) --- */
     .bg-blobs {
       position: fixed;
       top: 0;
@@ -52,55 +50,72 @@
       z-index: -1;
       overflow: hidden;
       pointer-events: none;
+      background: radial-gradient(circle at 50% 50%, #0f1225 0%, #05060c 100%);
     }
 
     .blob {
       position: absolute;
       border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.6;
-      animation: float 14s infinite ease-in-out alternate;
+      filter: blur(60px);
+      opacity: 0.75;
+      will-change: transform;
     }
 
     .blob-1 {
       top: -10%;
       left: -10%;
-      width: 320px;
-      height: 320px;
+      width: 380px;
+      height: 380px;
       background: radial-gradient(circle, var(--purple-accent), transparent 70%);
-      animation-duration: 12s;
+      animation: float1 10s infinite ease-in-out alternate;
     }
 
     .blob-2 {
       bottom: -10%;
       right: -10%;
-      width: 350px;
-      height: 350px;
+      width: 420px;
+      height: 420px;
       background: radial-gradient(circle, var(--cyan-accent), transparent 70%);
-      animation-duration: 16s;
+      animation: float2 13s infinite ease-in-out alternate;
     }
 
     .blob-3 {
-      top: 45%;
-      left: 30%;
-      width: 250px;
-      height: 250px;
-      background: radial-gradient(circle, rgba(168, 85, 247, 0.4), rgba(6, 182, 212, 0.4));
-      animation-duration: 10s;
+      top: 35%;
+      left: 20%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, var(--blue-accent), transparent 70%);
+      animation: float3 8s infinite ease-in-out alternate;
     }
 
-    @keyframes float {
-      0% {
-        transform: translate(0, 0) scale(1);
-      }
-      50% {
-        transform: translate(30px, -40px) scale(1.15);
-      }
-      100% {
-        transform: translate(-20px, 30px) scale(0.95);
-      }
+    .blob-4 {
+      bottom: 20%;
+      left: -5%;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.6), transparent 70%);
+      animation: float1 15s infinite ease-in-out alternate-reverse;
     }
 
+    @keyframes float1 {
+      0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+      50% { transform: translate(60px, 80px) rotate(180deg) scale(1.25); }
+      100% { transform: translate(-40px, 40px) rotate(360deg) scale(0.9); }
+    }
+
+    @keyframes float2 {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-80px, -60px) scale(1.2); }
+      100% { transform: translate(50px, -30px) scale(0.85); }
+    }
+
+    @keyframes float3 {
+      0% { transform: translate(0, 0) scale(0.9); }
+      50% { transform: translate(50px, -50px) scale(1.3); }
+      100% { transform: translate(-50px, 50px) scale(1); }
+    }
+
+    /* --- КОНТЕЙНЕР СТРАНИЦЫ --- */
     .container {
       width: 100%;
       max-width: 420px;
@@ -111,7 +126,7 @@
       z-index: 1;
     }
 
-    /* Аватарка с неоновым свечением */
+    /* --- АВАТАРКА --- */
     .avatar-box {
       position: relative;
       margin-top: 15px;
@@ -122,9 +137,8 @@
       height: 110px;
       object-fit: cover;
       border-radius: 50%;
-      border: 2px solid transparent;
-      background: linear-gradient(135deg, var(--purple-accent), var(--cyan-accent)) border-box;
-      box-shadow: 0 0 25px rgba(168, 85, 247, 0.4), 0 0 10px rgba(6, 182, 212, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 35px rgba(168, 85, 247, 0.5), 0 0 15px rgba(6, 182, 212, 0.4);
     }
 
     h1 {
@@ -132,9 +146,10 @@
       font-weight: 800;
       margin-top: 15px;
       letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #c084fc, #38bdf8);
+      background: linear-gradient(135deg, #ffffff 30%, #a855f7 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-shadow: 0 10px 20px rgba(0,0,0,0.3);
     }
 
     .quote {
@@ -145,21 +160,73 @@
       text-align: center;
     }
 
-    /* Плашка статуса Liquid Glass */
+    /* --- ЭФФЕКТ LIQUID GLASS iOS --- */
+    .glass-panel {
+      position: relative;
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(25px) saturate(180%);
+      -webkit-backdrop-filter: blur(25px) saturate(180%);
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                  box-shadow 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+                  border-color 0.25s ease;
+    }
+
+    /* Верхний стеклянный перелив (Глянец) */
+    .glass-panel::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 45%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 100%);
+      pointer-events: none;
+    }
+
+    /* --- ПЛАВНЫЙ ЭФФЕКТ НАЖАТИЯ И ВОЛНЫ (RIPPLE) --- */
+    .ripple-effect {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
+      transform: scale(0);
+      animation: ripple 0.6s cubic-bezier(0.1, 0.8, 0.3, 1);
+      pointer-events: none;
+    }
+
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* Анимация отдачи при клике на стеклянную карточку */
+    .glass-panel:active {
+      transform: scale(0.95);
+      box-shadow: 
+        0 5px 15px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    /* Статус (Исправлена опечатка) */
     .status-badge {
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 6px 14px;
-      border-radius: 20px;
+      padding: 8px 16px;
+      border-radius: 30px;
       font-size: 12px;
-      color: var(--text-sub);
-      margin-top: 12px;
-      border: 1px solid var(--card-border);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25), inset 0 1px 1px var(--glass-highlight);
+      color: #e2e8f0;
+      margin-top: 14px;
+      font-weight: 500;
     }
 
     .dot {
@@ -167,31 +234,23 @@
       height: 8px;
       background-color: var(--cyan-accent);
       border-radius: 50%;
-      box-shadow: 0 0 8px var(--cyan-accent);
+      box-shadow: 0 0 10px var(--cyan-accent);
     }
 
-    /* Плеер фоновой музыки (Liquid Glass) */
+    /* Плеер фоновой музыки */
     .music-player {
       width: 100%;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 12px 16px;
+      padding: 12px 18px;
       margin-top: 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 1px 2px var(--glass-highlight);
-      position: relative;
-      overflow: hidden;
     }
 
     .music-info {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       font-size: 13px;
       font-weight: 600;
     }
@@ -200,20 +259,21 @@
       background: linear-gradient(135deg, var(--purple-accent), var(--cyan-accent));
       border: none;
       color: white;
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+      box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
       font-size: 16px;
-      transition: transform 0.2s ease;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 2;
     }
 
     .music-btn:active {
-      transform: scale(0.92);
+      transform: scale(0.88);
     }
 
     /* Заголовки разделов */
@@ -225,6 +285,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
 
     .section-title::before {
@@ -234,22 +295,19 @@
       height: 18px;
       background: linear-gradient(to bottom, var(--purple-accent), var(--cyan-accent));
       border-radius: 2px;
-      box-shadow: 0 0 8px var(--purple-accent);
+      box-shadow: 0 0 10px var(--purple-accent);
     }
 
-    /* Сетка и карточки в стиле Liquid Glass */
+    /* Сетка карточек */
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 14px;
       width: 100%;
     }
 
     .card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 16px;
+      padding: 18px 14px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -257,80 +315,53 @@
       gap: 10px;
       text-decoration: none;
       color: var(--text-main);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36), inset 0 1px 1px var(--glass-highlight);
-      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Блик жидкого стекла */
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.15),
-        transparent
-      );
-      transition: 0.5s;
-      pointer-events: none;
-    }
-
-    .card:hover::before {
-      left: 100%;
-    }
-
-    /* Отклик при нажатии на карточку */
-    .card:active {
-      transform: scale(0.95);
-      border-color: rgba(6, 182, 212, 0.5);
-      box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+      cursor: pointer;
     }
 
     .card i {
-      font-size: 26px;
-      background: linear-gradient(135deg, #e9d5ff, #bae6fd);
+      font-size: 28px;
+      background: linear-gradient(135deg, #ffffff 40%, #c084fc 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
     }
 
     .card span {
       font-size: 13px;
       font-weight: 600;
+      letter-spacing: -0.2px;
     }
 
-    /* Информационный бокс Liquid Glass */
+    /* Информационный бокс */
     .notice-box {
       width: 100%;
-      background: rgba(168, 85, 247, 0.08);
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      border-radius: 16px;
-      padding: 12px 15px;
+      padding: 14px 16px;
       margin-top: 10px;
       font-size: 13px;
-      color: #e9d5ff;
+      color: #f1f5f9;
       line-height: 1.4;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25), inset 0 1px 1px var(--glass-highlight);
+      background: rgba(168, 85, 247, 0.12);
+      border-color: rgba(168, 85, 247, 0.35);
     }
   </style>
 </head>
 <body>
 
-  <!-- Живые градиентные фигуры фона -->
+  <!-- Динамический анимированный фон -->
   <div class="bg-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
   </div>
+
+  <!-- SVG Фильтр преломления Liquid Glass -->
+  <svg style="display:none;">
+    <filter id="glass-refract">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="1" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </svg>
 
   <!-- Аудиофайлы -->
   <audio id="click-sound" src="click.mp3" preload="auto"></audio>
@@ -347,15 +378,15 @@
     <p class="quote">"Волк не тот, кто волк, а тот, кто волк..."</p>
 
     <!-- Статус (с исправленной опечаткой) -->
-    <div class="status-badge">
+    <div class="status-badge glass-panel">
       <span class="dot"></span>
       Ремонт Унитазов, Альметьевск
     </div>
 
     <!-- Плеер фоновой музыки -->
-    <div class="music-player">
+    <div class="music-player glass-panel">
       <div class="music-info">
-        <i class="fa-solid fa-compact-disc" id="disc-icon" style="color: var(--cyan-accent);"></i>
+        <i class="fa-solid fa-compact-disc" id="disc-icon" style="color: var(--cyan-accent); font-size: 18px;"></i>
         <span id="music-status">Фоновый трек</span>
       </div>
       <button class="music-btn" id="play-btn">
@@ -366,27 +397,27 @@
     <!-- Медиа & Связь -->
     <div class="section-title">Медиа & Связь</div>
     <div class="grid">
-      <a href="https://twitch.tv" class="card sound-btn" target="_blank">
+      <a href="https://twitch.tv" class="card glass-panel sound-btn" target="_blank">
         <i class="fa-brands fa-twitch"></i>
         <span>Twitch</span>
       </a>
-      <a href="https://t.me" class="card sound-btn" target="_blank">
+      <a href="https://t.me" class="card glass-panel sound-btn" target="_blank">
         <i class="fa-brands fa-telegram"></i>
         <span>Telegram</span>
       </a>
-      <a href="https://youtube.com" class="card sound-btn" target="_blank">
+      <a href="https://youtube.com" class="card glass-panel sound-btn" target="_blank">
         <i class="fa-brands fa-youtube"></i>
         <span>YouTube</span>
       </a>
-      <a href="https://tiktok.com" class="card sound-btn" target="_blank">
+      <a href="https://tiktok.com" class="card glass-panel sound-btn" target="_blank">
         <i class="fa-brands fa-tiktok"></i>
         <span>TikTok</span>
       </a>
-      <a href="https://vk.com" class="card sound-btn" target="_blank">
+      <a href="https://vk.com" class="card glass-panel sound-btn" target="_blank">
         <i class="fa-brands fa-vk"></i>
         <span>ВКонтакте</span>
       </a>
-      <a href="https://discord.com" class="card sound-btn" target="_blank">
+      <a href="https://discord.com" class="card glass-panel sound-btn" target="_blank">
         <i class="fa-brands fa-discord"></i>
         <span>Discord</span>
       </a>
@@ -394,23 +425,23 @@
 
     <!-- Поддержка -->
     <div class="section-title">Поддержка</div>
-    <div class="notice-box">
+    <div class="notice-box glass-panel">
       ⚠️ <b>ВНИМАНИЕ:</b> Просьба не отправлять громкие звуки.
     </div>
     
-    <div class="grid" style="margin-top: 12px;">
-      <a href="https://donationalerts.com" class="card sound-btn" target="_blank">
+    <div class="grid" style="margin-top: 14px;">
+      <a href="https://donationalerts.com" class="card glass-panel sound-btn" target="_blank">
         <i class="fa-solid fa-coins"></i>
         <span>DonationAlerts</span>
       </a>
-      <a href="#" class="card sound-btn">
+      <a href="#" class="card glass-panel sound-btn">
         <i class="fa-solid fa-bell"></i>
         <span>MemeAlerts</span>
       </a>
     </div>
   </div>
 
-  <!-- Скрипт для звуков и плеера -->
+  <!-- Скрипт для звуков, жидкого отклика и плеера -->
   <script>
     const clickSound = document.getElementById('click-sound');
     const bgMusic = document.getElementById('bg-music');
@@ -426,23 +457,38 @@
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-      gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+      osc.frequency.setValueAtTime(850, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.04);
       osc.connect(gain);
       gain.connect(audioCtx.destination);
       osc.start();
-      osc.stop(audioCtx.currentTime + 0.05);
+      osc.stop(audioCtx.currentTime + 0.04);
     }
 
-    // Воспроизведение звука строго по клику (переходу)
-    document.querySelectorAll('.sound-btn').forEach(button => {
-      button.addEventListener('click', function() {
-        if (clickSound.readyState >= 2) {
-          clickSound.currentTime = 0;
-          clickSound.play().catch(() => playSyntheticClick());
-        } else {
-          playSyntheticClick();
+    // Эффект жидкой волны (Liquid Ripple) и звук при клике
+    document.querySelectorAll('.glass-panel').forEach(panel => {
+      panel.addEventListener('pointerdown', function(e) {
+        // Создаем волну от места касания
+        const rect = this.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple-effect';
+        const diameter = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = `${diameter}px`;
+        ripple.style.left = `${e.clientX - rect.left - diameter / 2}px`;
+        ripple.style.top = `${e.clientY - rect.top - diameter / 2}px`;
+        
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+
+        // Звук если это кнопка с классом sound-btn
+        if (this.classList.contains('sound-btn')) {
+          if (clickSound.readyState >= 2) {
+            clickSound.currentTime = 0;
+            clickSound.play().catch(() => playSyntheticClick());
+          } else {
+            playSyntheticClick();
+          }
         }
       });
     });
@@ -450,6 +496,7 @@
     // Управление музыкой (Play / Pause)
     playBtn.addEventListener('click', function(e) {
       e.preventDefault();
+      e.stopPropagation();
       
       if (bgMusic.paused) {
         bgMusic.play().then(() => {
@@ -457,7 +504,7 @@
           discIcon.classList.add('fa-spin');
           musicStatus.innerText = 'Играет трек';
         }).catch(err => {
-          alert('Файл music.mp3 не найден на GitHub или загружается!');
+          alert('Файл music.mp3 не найден на GitHub или еще загружается!');
         });
       } else {
         bgMusic.pause();
