@@ -239,7 +239,7 @@
     <!-- Статус -->
     <div class="status-badge">
       <span class="dot"></span>
-      Ремонт Унитазоаэв, Альметьевск
+      Ремонт Унитазоаэв, Альметьевск 
     </div>
 
     <!-- Плеер фоновой музыки -->
@@ -325,23 +325,31 @@
       osc.stop(audioCtx.currentTime + 0.05);
     }
 
-    // Звуки при клике/касании кнопок
+    // Функция единичного воспроизведения звука
+    function triggerClickSound() {
+      if (clickSound.readyState >= 2) {
+        clickSound.currentTime = 0;
+        clickSound.play().catch(() => playSyntheticClick());
+      } else {
+        playSyntheticClick();
+      }
+    }
+
+    // Защита от двойного срабатывания (touchstart + click)
     document.querySelectorAll('.sound-btn').forEach(button => {
+      let isTouched = false;
+
       button.addEventListener('touchstart', function() {
-        if (clickSound.readyState >= 2) {
-          clickSound.currentTime = 0;
-          clickSound.play().catch(() => playSyntheticClick());
-        } else {
-          playSyntheticClick();
-        }
-      });
+        isTouched = true;
+        triggerClickSound();
+      }, { passive: true });
+
       button.addEventListener('click', function() {
-        if (clickSound.readyState >= 2) {
-          clickSound.currentTime = 0;
-          clickSound.play().catch(() => playSyntheticClick());
-        } else {
-          playSyntheticClick();
+        if (isTouched) {
+          isTouched = false;
+          return;
         }
+        triggerClickSound();
       });
     });
 
