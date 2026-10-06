@@ -40,7 +40,7 @@
       -webkit-overflow-scrolling: touch;
     }
 
-    /* --- АКТИВНЫЙ ДИНАМИЧЕСКИЙ ФОН (Яндекс Музыка Style) --- */
+    /* --- АКТИВНЫЙ ДИНАМИЧЕСКИЙ ФОН --- */
     .bg-blobs {
       position: fixed;
       top: 0;
@@ -56,8 +56,8 @@
     .blob {
       position: absolute;
       border-radius: 50%;
-      filter: blur(60px);
-      opacity: 0.75;
+      filter: blur(50px);
+      opacity: 0.85;
       will-change: transform;
     }
 
@@ -93,7 +93,7 @@
       left: -5%;
       width: 280px;
       height: 280px;
-      background: radial-gradient(circle, rgba(168, 85, 247, 0.6), transparent 70%);
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.7), transparent 70%);
       animation: float1 15s infinite ease-in-out alternate-reverse;
     }
 
@@ -137,7 +137,7 @@
       height: 110px;
       object-fit: cover;
       border-radius: 50%;
-      border: 2px solid rgba(255, 255, 255, 0.3);
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
       box-shadow: 0 0 35px rgba(168, 85, 247, 0.5), 0 0 15px rgba(6, 182, 212, 0.4);
     }
 
@@ -160,43 +160,43 @@
       text-align: center;
     }
 
-    /* --- ЭФФЕКТ LIQUID GLASS iOS --- */
+    /* --- УЛЬТРАПРОЗРАЧНОЕ КРИСТАЛЛИЧЕСКОЕ СТЕКЛО (iOS Pure Glass) --- */
     .glass-panel {
       position: relative;
-      background: rgba(255, 255, 255, 0.07);
-      backdrop-filter: blur(25px) saturate(180%);
-      -webkit-backdrop-filter: blur(25px) saturate(180%);
-      border-radius: 22px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.03); /* Максимальная прозрачность */
+      backdrop-filter: blur(40px) saturate(210%);
+      -webkit-backdrop-filter: blur(40px) saturate(210%);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
       box-shadow: 
-        0 15px 35px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.4),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.45),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.1);
       overflow: hidden;
       transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), 
                   box-shadow 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
                   border-color 0.25s ease;
     }
 
-    /* Верхний стеклянный перелив (Глянец) */
+    /* Верхний тонкий отблеск кристалла */
     .glass-panel::after {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 45%;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 100%);
+      height: 40%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 100%);
       pointer-events: none;
     }
 
-    /* --- ПЛАВНЫЙ ЭФФЕКТ НАЖАТИЯ И ВОЛНЫ (RIPPLE) --- */
+    /* --- РИППЛ-ВОЛНА ПРИ КЛИКЕ --- */
     .ripple-effect {
       position: absolute;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 70%);
       transform: scale(0);
-      animation: ripple 0.6s cubic-bezier(0.1, 0.8, 0.3, 1);
+      animation: ripple 0.55s cubic-bezier(0.1, 0.8, 0.3, 1);
       pointer-events: none;
     }
 
@@ -207,26 +207,26 @@
       }
     }
 
-    /* Анимация отдачи при клике на стеклянную карточку */
     .glass-panel:active {
       transform: scale(0.95);
       box-shadow: 
-        0 5px 15px rgba(0, 0, 0, 0.5),
+        0 8px 20px rgba(0, 0, 0, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.6);
-      border-color: rgba(255, 255, 255, 0.35);
+      border-color: rgba(255, 255, 255, 0.45);
     }
 
-    /* Статус (Исправлена опечатка) */
+    /* Статус */
     .status-badge {
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 16px;
+      padding: 8px 18px;
       border-radius: 30px;
       font-size: 12px;
-      color: #e2e8f0;
+      color: #ffffff;
       margin-top: 14px;
       font-weight: 500;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
     }
 
     .dot {
@@ -307,7 +307,7 @@
     }
 
     .card {
-      padding: 18px 14px;
+      padding: 20px 14px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -320,7 +320,7 @@
 
     .card i {
       font-size: 28px;
-      background: linear-gradient(135deg, #ffffff 40%, #c084fc 100%);
+      background: linear-gradient(135deg, #ffffff 30%, #c084fc 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
@@ -330,6 +330,7 @@
       font-size: 13px;
       font-weight: 600;
       letter-spacing: -0.2px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
     }
 
     /* Информационный бокс */
@@ -338,10 +339,11 @@
       padding: 14px 16px;
       margin-top: 10px;
       font-size: 13px;
-      color: #f1f5f9;
+      color: #ffffff;
       line-height: 1.4;
-      background: rgba(168, 85, 247, 0.12);
+      background: rgba(168, 85, 247, 0.08);
       border-color: rgba(168, 85, 247, 0.35);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
     }
   </style>
 </head>
@@ -354,14 +356,6 @@
     <div class="blob blob-3"></div>
     <div class="blob blob-4"></div>
   </div>
-
-  <!-- SVG Фильтр преломления Liquid Glass -->
-  <svg style="display:none;">
-    <filter id="glass-refract">
-      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="1" result="noise" />
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
-    </filter>
-  </svg>
 
   <!-- Аудиофайлы -->
   <audio id="click-sound" src="click.mp3" preload="auto"></audio>
@@ -377,7 +371,7 @@
     <h1>Гриша Подшипник</h1>
     <p class="quote">"Волк не тот, кто волк, а тот, кто волк..."</p>
 
-    <!-- Статус (с исправленной опечаткой) -->
+    <!-- Статус -->
     <div class="status-badge glass-panel">
       <span class="dot"></span>
       Ремонт Унитазов, Альметьевск
@@ -441,7 +435,7 @@
     </div>
   </div>
 
-  <!-- Скрипт для звуков, жидкого отклика и плеера -->
+  <!-- Скрипт для звуков и плеера (С защитой от воспроизведения при свайпах) -->
   <script>
     const clickSound = document.getElementById('click-sound');
     const bgMusic = document.getElementById('bg-music');
@@ -466,10 +460,25 @@
       osc.stop(audioCtx.currentTime + 0.04);
     }
 
-    // Эффект жидкой волны (Liquid Ripple) и звук при клике
+    function triggerClickSound() {
+      if (clickSound.readyState >= 2) {
+        clickSound.currentTime = 0;
+        clickSound.play().catch(() => playSyntheticClick());
+      } else {
+        playSyntheticClick();
+      }
+    }
+
+    // Защита от срабатывания звука во время прокрутки/свайпа
+    let startX = 0;
+    let startY = 0;
+
     document.querySelectorAll('.glass-panel').forEach(panel => {
       panel.addEventListener('pointerdown', function(e) {
-        // Создаем волну от места касания
+        startX = e.clientX;
+        startY = e.clientY;
+
+        // Создание анимированной волны от нажатия
         const rect = this.getBoundingClientRect();
         const ripple = document.createElement('span');
         ripple.className = 'ripple-effect';
@@ -479,16 +488,16 @@
         ripple.style.top = `${e.clientY - rect.top - diameter / 2}px`;
         
         this.appendChild(ripple);
-        setTimeout(() => ripple.remove(), 600);
+        setTimeout(() => ripple.remove(), 550);
+      });
 
-        // Звук если это кнопка с классом sound-btn
-        if (this.classList.contains('sound-btn')) {
-          if (clickSound.readyState >= 2) {
-            clickSound.currentTime = 0;
-            clickSound.play().catch(() => playSyntheticClick());
-          } else {
-            playSyntheticClick();
-          }
+      // Воспроизводим звук ТОЛЬКО если палец/мышь не сместились (не было свайпа)
+      panel.addEventListener('pointerup', function(e) {
+        const diffX = Math.abs(e.clientX - startX);
+        const diffY = Math.abs(e.clientY - startY);
+
+        if (diffX < 8 && diffY < 8 && this.classList.contains('sound-btn')) {
+          triggerClickSound();
         }
       });
     });
