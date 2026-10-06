@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Моя Визитка</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #ffffff;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      margin: 0;
+    }
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-top: 20px;
+    }
+    h1 { margin: 10px 0 5px 0; }
+    p { color: #888; margin-bottom: 20px; }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      width: 100%;
+      max-width: 400px;
+    }
+    .card {
+      background: #1e1e1e;
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      border: 1px solid #2a2a2a;
+    }
+    .card:hover { background: #2a2a2a; }
+  </style>
+</head>
+<body>
+
+  <!-- Аватарка или гифка -->
+  <img class="avatar" src="https://i.gifer.com/Origin.gif" alt="Gif">
+
+  <h1>Никнейм</h1>
+  <p>"волк не тот, кто волк, а тот, кто волк..."</p>
+
+  <h2>Медиа & Связь</h2>
+  <div class="grid">
+    <a href="https://t.me/+wQpEdztaIbo5Njc1" class="card">Telegram</a>
+    <a href="https://twitch.tv/jude_low/home" class="card">Twitch</a>
+    <a href="https://youtube.com/Kael47" class="card">YouTube</a>
+    <a href="https://vk.com/crow" class="card">ВКонтакте</a>
+  </div>
+
+</body>
+</html>
