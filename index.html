@@ -47,7 +47,7 @@
       align-items: center;
     }
 
-    /* Аватарка с фиолетово-голубым неоновым свечением */
+    /* Аватарка с неоновым свечением */
     .avatar-box {
       position: relative;
       margin-top: 15px;
@@ -130,14 +130,15 @@
       background: linear-gradient(135deg, var(--purple-accent), var(--cyan-accent));
       border: none;
       color: white;
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+      font-size: 16px;
     }
 
     /* Заголовки разделов */
@@ -238,16 +239,16 @@
     <!-- Статус -->
     <div class="status-badge">
       <span class="dot"></span>
-      Ремонт Унитазоаэв, Альметьевск 
+      Ремонт Унитазоаэв, Альметьевск
     </div>
 
     <!-- Плеер фоновой музыки -->
     <div class="music-player">
       <div class="music-info">
-        <i class="fa-solid fa-compact-disc fa-spin" style="color: var(--cyan-accent);"></i>
-        <span>Фоновый трек</span>
+        <i class="fa-solid fa-compact-disc" id="disc-icon" style="color: var(--cyan-accent);"></i>
+        <span id="music-status">Фоновый трек</span>
       </div>
-      <button class="music-btn" id="play-btn" onclick="toggleMusic()">
+      <button class="music-btn" id="play-btn">
         <i class="fa-solid fa-play" id="play-icon"></i>
       </button>
     </div>
@@ -303,26 +304,66 @@
   <script>
     const clickSound = document.getElementById('click-sound');
     const bgMusic = document.getElementById('bg-music');
+    const playBtn = document.getElementById('play-btn');
     const playIcon = document.getElementById('play-icon');
+    const discIcon = document.getElementById('disc-icon');
+    const musicStatus = document.getElementById('music-status');
 
-    // Звук клика по кнопкам
+    // Резервный синтезатор щелчка для iOS/Safari
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playSyntheticClick() {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.05);
+    }
+
+    // Звуки при клике/касании кнопок
     document.querySelectorAll('.sound-btn').forEach(button => {
-      button.addEventListener('click', () => {
-        clickSound.currentTime = 0;
-        clickSound.play().catch(() => {});
+      button.addEventListener('touchstart', function() {
+        if (clickSound.readyState >= 2) {
+          clickSound.currentTime = 0;
+          clickSound.play().catch(() => playSyntheticClick());
+        } else {
+          playSyntheticClick();
+        }
+      });
+      button.addEventListener('click', function() {
+        if (clickSound.readyState >= 2) {
+          clickSound.currentTime = 0;
+          clickSound.play().catch(() => playSyntheticClick());
+        } else {
+          playSyntheticClick();
+        }
       });
     });
 
-    // Управление фоновой музыкой
-    function toggleMusic() {
+    // Управление музыкой (Play / Pause)
+    playBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      
       if (bgMusic.paused) {
-        bgMusic.play();
-        playIcon.className = 'fa-solid fa-pause';
+        bgMusic.play().then(() => {
+          playIcon.className = 'fa-solid fa-pause';
+          discIcon.classList.add('fa-spin');
+          musicStatus.innerText = 'Играет трек';
+        }).catch(err => {
+          alert('Файл music.mp3 не найден на GitHub или загружается!');
+        });
       } else {
         bgMusic.pause();
         playIcon.className = 'fa-solid fa-play';
+        discIcon.classList.remove('fa-spin');
+        musicStatus.innerText = 'Пауза';
       }
-    }
+    });
   </script>
 </body>
 </html>
