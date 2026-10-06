@@ -8,10 +8,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --bg-color: #05060a;
+      --bg-dark: #030408;
       --purple-accent: #a855f7;
       --cyan-accent: #06b6d4;
       --blue-accent: #3b82f6;
+      --pink-accent: #ec4899;
       --text-main: #ffffff;
       --text-sub: #94a3b8;
     }
@@ -24,24 +25,19 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
-      background-color: var(--bg-color);
+      background-color: var(--bg-dark);
       color: var(--text-main);
       display: flex;
       justify-content: center;
-      padding: 20px 15px 50px 15px;
+      padding: 25px 15px 50px 15px;
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
     }
 
-    /* --- АКТИВНЫЙ ДИНАМИЧЕСКИЙ ФОН --- */
-    .bg-blobs {
+    /* --- БЫСТРЫЙ ДИНАМИЧЕСКИЙ ПЕРЕЛИВАЮЩИЙСЯ ФОН --- */
+    .bg-gradient-container {
       position: fixed;
       top: 0;
       left: 0;
@@ -49,73 +45,73 @@
       height: 100vh;
       z-index: -1;
       overflow: hidden;
-      pointer-events: none;
-      background: radial-gradient(circle at 50% 50%, #0a0c16 0%, #020305 100%);
+      background: #05070f;
     }
 
     .blob {
       position: absolute;
       border-radius: 50%;
-      filter: blur(50px);
+      filter: blur(60px);
       opacity: 0.85;
       will-change: transform;
     }
 
+    /* Ускоренные динамические петли градиента */
     .blob-1 {
       top: -10%;
       left: -10%;
-      width: 380px;
-      height: 380px;
-      background: radial-gradient(circle, var(--purple-accent), transparent 70%);
-      animation: float1 10s infinite ease-in-out alternate;
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, var(--purple-accent) 0%, var(--pink-accent) 70%, transparent 100%);
+      animation: fastMove1 4.5s infinite ease-in-out alternate;
     }
 
     .blob-2 {
-      bottom: -10%;
+      bottom: -15%;
       right: -10%;
-      width: 420px;
-      height: 420px;
-      background: radial-gradient(circle, var(--cyan-accent), transparent 70%);
-      animation: float2 13s infinite ease-in-out alternate;
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle, var(--cyan-accent) 0%, var(--blue-accent) 70%, transparent 100%);
+      animation: fastMove2 3.8s infinite ease-in-out alternate;
     }
 
     .blob-3 {
-      top: 35%;
-      left: 20%;
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, var(--blue-accent), transparent 70%);
-      animation: float3 8s infinite ease-in-out alternate;
+      top: 40%;
+      left: 15%;
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, var(--pink-accent) 0%, var(--purple-accent) 70%, transparent 100%);
+      animation: fastMove3 5s infinite ease-in-out alternate;
     }
 
     .blob-4 {
-      bottom: 20%;
-      left: -5%;
-      width: 280px;
-      height: 280px;
-      background: radial-gradient(circle, rgba(168, 85, 247, 0.7), transparent 70%);
-      animation: float1 15s infinite ease-in-out alternate-reverse;
+      bottom: 25%;
+      left: -10%;
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, var(--blue-accent) 0%, var(--cyan-accent) 70%, transparent 100%);
+      animation: fastMove1 3.2s infinite ease-in-out alternate-reverse;
     }
 
-    @keyframes float1 {
-      0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-      50% { transform: translate(60px, 80px) rotate(180deg) scale(1.25); }
-      100% { transform: translate(-40px, 40px) rotate(360deg) scale(0.9); }
+    @keyframes fastMove1 {
+      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      50% { transform: translate(100px, 120px) scale(1.3) rotate(90deg); }
+      100% { transform: translate(-60px, 80px) scale(0.9) rotate(180deg); }
     }
 
-    @keyframes float2 {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(-80px, -60px) scale(1.2); }
-      100% { transform: translate(50px, -30px) scale(0.85); }
+    @keyframes fastMove2 {
+      0% { transform: translate(0, 0) scale(1.1); }
+      50% { transform: translate(-120px, -90px) scale(0.85); }
+      100% { transform: translate(80px, -50px) scale(1.25); }
     }
 
-    @keyframes float3 {
-      0% { transform: translate(0, 0) scale(0.9); }
-      50% { transform: translate(50px, -50px) scale(1.3); }
-      100% { transform: translate(-50px, 50px) scale(1); }
+    @keyframes fastMove3 {
+      0% { transform: translate(-40px, 50px) scale(0.9); }
+      50% { transform: translate(90px, -80px) scale(1.35); }
+      100% { transform: translate(-80px, -40px) scale(1); }
     }
 
-    /* --- КОНТЕЙНЕР СТРАНИЦЫ --- */
+    /* --- КОНТЕЙНЕР --- */
     .container {
       width: 100%;
       max-width: 420px;
@@ -126,27 +122,27 @@
       z-index: 1;
     }
 
-    /* --- АВАТАРКА --- */
+    /* Аватарка */
     .avatar-box {
       position: relative;
-      margin-top: 15px;
+      margin-top: 10px;
     }
 
     .avatar {
-      width: 110px;
-      height: 110px;
+      width: 105px;
+      height: 105px;
       object-fit: cover;
       border-radius: 50%;
-      border: 1.5px solid rgba(255, 255, 255, 0.5);
-      box-shadow: 0 0 35px rgba(168, 85, 247, 0.5), 0 0 15px rgba(6, 182, 212, 0.4);
+      border: 1.5px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 0 30px rgba(168, 85, 247, 0.6), 0 0 15px rgba(6, 182, 212, 0.5);
     }
 
     h1 {
-      font-size: 28px;
+      font-size: 27px;
       font-weight: 800;
-      margin-top: 15px;
+      margin-top: 14px;
       letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #ffffff 30%, #a855f7 100%);
+      background: linear-gradient(135deg, #ffffff 40%, #c084fc 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-shadow: 0 10px 20px rgba(0,0,0,0.5);
@@ -155,95 +151,74 @@
     .quote {
       color: var(--text-sub);
       font-style: italic;
-      font-size: 14px;
-      margin-top: 6px;
+      font-size: 13.5px;
+      margin-top: 5px;
       text-align: center;
     }
 
-    /* --- ТЕМНОЕ СТЕКЛО С ПРЕЛОМЛЕНИЕМ И ХРОМАТИЧЕСКОЙ АБЕРРАЦИЕЙ --- */
-    .glass-panel {
+    /* --- МАТОВЫЕ МАТОВЫЕ ПЛАШКИ С ОТРAЖЕНИЕМ И ПРЕЛОМЛЕНИЕМ СВЕТА --- */
+    .frosted-glass {
       position: relative;
-      background: linear-gradient(
-        135deg, 
-        rgba(255, 255, 255, 0.14) 0%, 
-        rgba(15, 18, 32, 0.4) 45%, 
-        rgba(0, 0, 0, 0.55) 100%
-      );
-      backdrop-filter: blur(22px) saturate(200%);
-      -webkit-backdrop-filter: blur(22px) saturate(200%);
-      filter: url('#liquid-refract'); /* SVG Оптическое искажение света */
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.38);
+      background: rgba(18, 22, 38, 0.45); /* Полупрозрачная матовая основа */
+      backdrop-filter: blur(25px) saturate(180%);
+      -webkit-backdrop-filter: blur(25px) saturate(180%);
+      border-radius: 22px;
+      /* Преломляющая хроматическая окантовка (RGB Сквозной спектр) */
+      border: 1px solid rgba(255, 255, 255, 0.22);
       box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.6),
-        -1px -1px 2px rgba(6, 182, 212, 0.3), /* Хроматический синий отсвет */
-        1px 1px 2px rgba(168, 85, 247, 0.3),  /* Хроматический пурпурный отсвет */
-        inset 0 1.5px 1px rgba(255, 255, 255, 0.65),
-        inset 0 -1.5px 2px rgba(0, 0, 0, 0.5);
+        0 15px 35px rgba(0, 0, 0, 0.45),
+        -1px -1px 2px rgba(6, 182, 212, 0.25), /* Хроматический преломляющий синий */
+        1px 1px 2px rgba(236, 72, 153, 0.25),  /* Хроматический преломляющий розовый */
+        inset 0 1px 1px rgba(255, 255, 255, 0.4),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.3);
       overflow: hidden;
       transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), 
                   box-shadow 0.22s ease, 
-                  border-color 0.22s ease;
+                  border-color 0.22s ease,
+                  background 0.22s ease;
+      cursor: pointer;
     }
 
-    /* Диагональный глянцевый блик */
-    .glass-panel::before {
+    /* Динамический матовый блик света (Reflective Light Layer) */
+    .frosted-glass::before {
       content: '';
       position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(
-        125deg, 
-        rgba(255, 255, 255, 0.25) 0%, 
-        rgba(255, 255, 255, 0.05) 38%, 
-        transparent 38.5%, 
-        transparent 100%
-      );
+      top: var(--mouse-y, 0%);
+      left: var(--mouse-x, 0%);
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .frosted-glass:hover::before {
+      opacity: 1;
+    }
+
+    /* Верхний светящийся скос стекла */
+    .frosted-glass::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
       pointer-events: none;
     }
 
-    /* Блик на обводке */
-    .glass-panel::after {
-      content: '';
-      position: absolute;
-      top: 2px;
-      left: 18px;
-      width: 30px;
-      height: 2px;
-      background: #ffffff;
-      filter: blur(1px);
-      box-shadow: 0 0 8px #ffffff;
-      opacity: 0.75;
-      pointer-events: none;
-    }
-
-    /* --- ЕДИНЫЙ ПЛАВНЫЙ ОТКЛИК ПЛАШЕК ПРИ НАЖАТИИ --- */
-    .glass-panel:active, .interactive-click:active {
-      transform: scale(0.92) !important;
+    /* --- УПРУГИЙ ИНТЕРАКТИВНЫЙ ОТКЛИК ПРИ НАЖАТИИ (BOUNCE & SCALE) --- */
+    .frosted-glass:active, .btn-bounce:active {
+      transform: scale(0.94) !important;
+      background: rgba(30, 36, 60, 0.65) !important;
+      border-color: rgba(255, 255, 255, 0.5) !important;
       box-shadow: 
-        0 5px 15px rgba(0, 0, 0, 0.8),
+        0 5px 15px rgba(0, 0, 0, 0.6),
         0 0 20px rgba(168, 85, 247, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-      border-color: rgba(255, 255, 255, 0.65);
-    }
-
-    /* РИППЛ-ВОЛНА ПРИ КЛИКЕ */
-    .ripple-effect {
-      position: absolute;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
-      transform: scale(0);
-      animation: ripple 0.55s cubic-bezier(0.1, 0.8, 0.3, 1);
-      pointer-events: none;
-    }
-
-    @keyframes ripple {
-      to {
-        transform: scale(4);
-        opacity: 0;
-      }
+        inset 0 1px 1px rgba(255, 255, 255, 0.6) !important;
     }
 
     /* Статус */
@@ -307,9 +282,9 @@
     /* Заголовки разделов */
     .section-title {
       align-self: flex-start;
-      font-size: 17px;
+      font-size: 16.5px;
       font-weight: 700;
-      margin: 25px 0 12px 0;
+      margin: 24px 0 12px 0;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -326,7 +301,7 @@
       box-shadow: 0 0 10px var(--purple-accent);
     }
 
-    /* Сетка карточек соцсетей */
+    /* Сетка соцсетей */
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -343,12 +318,11 @@
       gap: 10px;
       text-decoration: none;
       color: var(--text-main);
-      cursor: pointer;
     }
 
     .card i {
       font-size: 28px;
-      background: linear-gradient(135deg, #ffffff 40%, #c084fc 100%);
+      background: linear-gradient(135deg, #ffffff 30%, #c084fc 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
@@ -372,7 +346,7 @@
     .notice-box {
       width: 100%;
       padding: 14px 16px;
-      margin-top: 10px;
+      margin-top: 5px;
       font-size: 13px;
       color: #ffffff;
       line-height: 1.4;
@@ -382,21 +356,13 @@
 </head>
 <body>
 
-  <!-- Динамический анимированный фон -->
-  <div class="bg-blobs">
+  <!-- Динамический переливающийся абстрактный фон -->
+  <div class="bg-gradient-container">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
     <div class="blob blob-4"></div>
   </div>
-
-  <!-- SVG-фильтр настоящего динамического преломления света -->
-  <svg style="display:none;">
-    <filter id="liquid-refract" x="-10%" y="-10%" width="120%" height="120%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="2" result="noise" />
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G" />
-    </filter>
-  </svg>
 
   <!-- Аудиофайлы -->
   <audio id="click-sound" src="click.mp3" preload="auto"></audio>
@@ -413,18 +379,18 @@
     <p class="quote">"Волк не тот, кто волк, а тот, кто волк..."</p>
 
     <!-- Статус -->
-    <div class="status-badge glass-panel sound-btn">
+    <div class="status-badge frosted-glass sound-btn">
       <span class="dot"></span>
       Ремонт Унитазов, Альметьевск
     </div>
 
     <!-- Плеер фоновой музыки -->
-    <div class="music-player glass-panel">
+    <div class="music-player frosted-glass">
       <div class="music-info">
         <i class="fa-solid fa-compact-disc" id="disc-icon" style="color: var(--cyan-accent); font-size: 18px;"></i>
         <span id="music-status">Фоновый трек</span>
       </div>
-      <button class="music-btn interactive-click" id="play-btn">
+      <button class="music-btn btn-bounce" id="play-btn">
         <i class="fa-solid fa-play" id="play-icon"></i>
       </button>
     </div>
@@ -432,27 +398,27 @@
     <!-- Медиа & Связь -->
     <div class="section-title">Медиа & Связь</div>
     <div class="grid">
-      <a href="https://twitch.tv" class="card glass-panel sound-btn" target="_blank">
+      <a href="https://twitch.tv" class="card frosted-glass sound-btn" target="_blank">
         <i class="fa-brands fa-twitch"></i>
         <span>Twitch</span>
       </a>
-      <a href="https://t.me" class="card glass-panel sound-btn" target="_blank">
+      <a href="https://t.me" class="card frosted-glass sound-btn" target="_blank">
         <i class="fa-brands fa-telegram"></i>
         <span>Telegram</span>
       </a>
-      <a href="https://youtube.com" class="card glass-panel sound-btn" target="_blank">
+      <a href="https://youtube.com" class="card frosted-glass sound-btn" target="_blank">
         <i class="fa-brands fa-youtube"></i>
         <span>YouTube</span>
       </a>
-      <a href="https://tiktok.com" class="card glass-panel sound-btn" target="_blank">
+      <a href="https://tiktok.com" class="card frosted-glass sound-btn" target="_blank">
         <i class="fa-brands fa-tiktok"></i>
         <span>TikTok</span>
       </a>
-      <a href="https://vk.com" class="card glass-panel sound-btn" target="_blank">
+      <a href="https://vk.com" class="card frosted-glass sound-btn" target="_blank">
         <i class="fa-brands fa-vk"></i>
         <span>ВКонтакте</span>
       </a>
-      <a href="https://discord.com" class="card glass-panel sound-btn" target="_blank">
+      <a href="https://discord.com" class="card frosted-glass sound-btn" target="_blank">
         <i class="fa-brands fa-discord"></i>
         <span>Discord</span>
       </a>
@@ -460,23 +426,23 @@
 
     <!-- Поддержка -->
     <div class="section-title">Поддержка</div>
-    <div class="notice-box glass-panel">
-      ⚠️️ <b>ВНИМАНИЕ:</b> Просьба не отправлять громкие звуки.
+    <div class="notice-box frosted-glass">
+      ⚠ <b>ВНИМАНИЕ:</b> Просьба не отправлять громкие звуки.
     </div>
     
     <div class="grid" style="margin-top: 14px;">
-      <a href="https://donationalerts.com" class="card glass-panel sound-btn" target="_blank">
+      <a href="https://donationalerts.com" class="card frosted-glass sound-btn" target="_blank">
         <i class="fa-solid fa-coins"></i>
         <span>DonationAlerts</span>
       </a>
-      <a href="#" class="card glass-panel sound-btn">
+      <a href="#" class="card frosted-glass sound-btn">
         <i class="fa-solid fa-bell"></i>
         <span>MemeAlerts</span>
       </a>
     </div>
   </div>
 
-  <!-- Скрипт для тактильного и звукового отклика -->
+  <!-- Скрипт звукового отклика и динамических отблесков -->
   <script>
     const clickSound = document.getElementById('click-sound');
     const bgMusic = document.getElementById('bg-music');
@@ -485,20 +451,20 @@
     const discIcon = document.getElementById('disc-icon');
     const musicStatus = document.getElementById('music-status');
 
-    // Синтез звука щелчка
+    // Синтезатор акустического щелчка
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playSyntheticClick() {
       if (audioCtx.state === 'suspended') audioCtx.resume();
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(850, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(900, audioCtx.currentTime);
       gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.035);
       osc.connect(gain);
       gain.connect(audioCtx.destination);
       osc.start();
-      osc.stop(audioCtx.currentTime + 0.04);
+      osc.stop(audioCtx.currentTime + 0.035);
     }
 
     function triggerClickSound() {
@@ -510,32 +476,28 @@
       }
     }
 
-    let startX = 0;
-    let startY = 0;
+    let startX = 0, startY = 0;
 
-    // Добавление интерактивности, анимации откликов и защиты от свайпа
-    document.querySelectorAll('.glass-panel').forEach(panel => {
-      panel.addEventListener('pointerdown', function(e) {
-        startX = e.clientX;
-        startY = e.clientY;
-
-        const rect = this.getBoundingClientRect();
-        const ripple = document.createElement('span');
-        ripple.className = 'ripple-effect';
-        const diameter = Math.max(rect.width, rect.height);
-        ripple.style.width = ripple.style.height = `${diameter}px`;
-        ripple.style.left = `${e.clientX - rect.left - diameter / 2}px`;
-        ripple.style.top = `${e.clientY - rect.top - diameter / 2}px`;
-        
-        this.appendChild(ripple);
-        setTimeout(() => ripple.remove(), 550);
+    // Динамический свет при наведении/касании и отклик
+    document.querySelectorAll('.frosted-glass').forEach(card => {
+      card.addEventListener('pointermove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
       });
 
-      panel.addEventListener('pointerup', function(e) {
+      card.addEventListener('pointerdown', e => {
+        startX = e.clientX;
+        startY = e.clientY;
+      });
+
+      card.addEventListener('pointerup', e => {
         const diffX = Math.abs(e.clientX - startX);
         const diffY = Math.abs(e.clientY - startY);
 
-        if (diffX < 8 && diffY < 8 && this.classList.contains('sound-btn')) {
+        if (diffX < 8 && diffY < 8 && card.classList.contains('sound-btn')) {
           triggerClickSound();
         }
       });
@@ -552,7 +514,7 @@
           playIcon.className = 'fa-solid fa-pause';
           discIcon.classList.add('fa-spin');
           musicStatus.innerText = 'Играет трек';
-        }).catch(err => {
+        }).catch(() => {
           alert('Файл music.mp3 не найден или еще загружается!');
         });
       } else {
