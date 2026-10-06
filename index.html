@@ -9,8 +9,9 @@
   <style>
     :root {
       --bg-color: #0b0d19;
-      --card-bg: rgba(22, 27, 46, 0.7);
-      --card-border: rgba(99, 102, 241, 0.25);
+      --card-bg: rgba(22, 27, 46, 0.45);
+      --card-border: rgba(255, 255, 255, 0.15);
+      --glass-highlight: rgba(255, 255, 255, 0.25);
       --purple-accent: #a855f7;
       --cyan-accent: #06b6d4;
       --text-main: #f3f4f6;
@@ -25,18 +26,79 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       background-color: var(--bg-color);
-      /* Градиентный фон с голубым и фиолетовым свечением */
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 40%);
-      background-attachment: fixed;
       color: var(--text-main);
       display: flex;
       justify-content: center;
       padding: 20px 15px 40px 15px;
       min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Анимированный живой фон */
+    .bg-blobs {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.6;
+      animation: float 14s infinite ease-in-out alternate;
+    }
+
+    .blob-1 {
+      top: -10%;
+      left: -10%;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, var(--purple-accent), transparent 70%);
+      animation-duration: 12s;
+    }
+
+    .blob-2 {
+      bottom: -10%;
+      right: -10%;
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, var(--cyan-accent), transparent 70%);
+      animation-duration: 16s;
+    }
+
+    .blob-3 {
+      top: 45%;
+      left: 30%;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.4), rgba(6, 182, 212, 0.4));
+      animation-duration: 10s;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+      50% {
+        transform: translate(30px, -40px) scale(1.15);
+      }
+      100% {
+        transform: translate(-20px, 30px) scale(0.95);
+      }
     }
 
     .container {
@@ -45,6 +107,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+      z-index: 1;
     }
 
     /* Аватарка с неоновым свечением */
@@ -81,19 +145,21 @@
       text-align: center;
     }
 
-    /* Плашка статуса */
+    /* Плашка статуса Liquid Glass */
     .status-badge {
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(26, 31, 56, 0.8);
+      background: rgba(255, 255, 255, 0.05);
       padding: 6px 14px;
       border-radius: 20px;
       font-size: 12px;
       color: var(--text-sub);
       margin-top: 12px;
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      backdrop-filter: blur(10px);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25), inset 0 1px 1px var(--glass-highlight);
     }
 
     .dot {
@@ -104,18 +170,22 @@
       box-shadow: 0 0 8px var(--cyan-accent);
     }
 
-    /* Плеер фоновой музыки */
+    /* Плеер фоновой музыки (Liquid Glass) */
     .music-player {
       width: 100%;
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(6, 182, 212, 0.15));
+      background: rgba(255, 255, 255, 0.06);
       border: 1px solid var(--card-border);
-      border-radius: 16px;
+      border-radius: 20px;
       padding: 12px 16px;
       margin-top: 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 1px 2px var(--glass-highlight);
+      position: relative;
+      overflow: hidden;
     }
 
     .music-info {
@@ -139,6 +209,11 @@
       cursor: pointer;
       box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
       font-size: 16px;
+      transition: transform 0.2s ease;
+    }
+
+    .music-btn:active {
+      transform: scale(0.92);
     }
 
     /* Заголовки разделов */
@@ -162,7 +237,7 @@
       box-shadow: 0 0 8px var(--purple-accent);
     }
 
-    /* Сетка и карточки */
+    /* Сетка и карточки в стиле Liquid Glass */
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -173,7 +248,7 @@
     .card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 16px;
+      border-radius: 20px;
       padding: 16px;
       display: flex;
       flex-direction: column;
@@ -182,17 +257,41 @@
       gap: 10px;
       text-decoration: none;
       color: var(--text-main);
-      backdrop-filter: blur(12px);
-      transition: all 0.2s ease;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36), inset 0 1px 1px var(--glass-highlight);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
       position: relative;
       overflow: hidden;
     }
 
-    /* Отклик при нажатии на кнопку */
+    /* Блик жидкого стекла */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.15),
+        transparent
+      );
+      transition: 0.5s;
+      pointer-events: none;
+    }
+
+    .card:hover::before {
+      left: 100%;
+    }
+
+    /* Отклик при нажатии на карточку */
     .card:active {
       transform: scale(0.95);
-      border-color: var(--cyan-accent);
-      box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+      border-color: rgba(6, 182, 212, 0.5);
+      box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.4);
     }
 
     .card i {
@@ -207,20 +306,31 @@
       font-weight: 600;
     }
 
+    /* Информационный бокс Liquid Glass */
     .notice-box {
       width: 100%;
-      background: rgba(168, 85, 247, 0.1);
+      background: rgba(168, 85, 247, 0.08);
       border: 1px solid rgba(168, 85, 247, 0.3);
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 12px 15px;
       margin-top: 10px;
       font-size: 13px;
       color: #e9d5ff;
       line-height: 1.4;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25), inset 0 1px 1px var(--glass-highlight);
     }
   </style>
 </head>
 <body>
+
+  <!-- Живые градиентные фигуры фона -->
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
 
   <!-- Аудиофайлы -->
   <audio id="click-sound" src="click.mp3" preload="auto"></audio>
@@ -236,10 +346,10 @@
     <h1>Гриша Подшипник</h1>
     <p class="quote">"Волк не тот, кто волк, а тот, кто волк..."</p>
 
-    <!-- Статус -->
+    <!-- Статус (с исправленной опечаткой) -->
     <div class="status-badge">
       <span class="dot"></span>
-      Ремонт Унитазоаэв, Альметьевск
+      Ремонт Унитазов, Альметьевск
     </div>
 
     <!-- Плеер фоновой музыки -->
